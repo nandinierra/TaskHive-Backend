@@ -1,4 +1,7 @@
+
+
 import { appointmentModel } from "../models/appointmentModel.js"
+
 
 export async function bookAppointment(req,res) { 
     try{
@@ -14,6 +17,7 @@ export async function bookAppointment(req,res) {
      
 }
 
+
 export async function getAppointments(req,res){
      try{
        const userId=req.user.id;
@@ -24,4 +28,23 @@ export async function getAppointments(req,res){
      }catch(error){
         res.status(400).json({message:error})
      }
+}
+
+
+export async function deleteAppointments(req,res){
+  try{
+     const appointmentId = req.params.appointmentId;
+     console.log(appointmentId);
+     const appointment=await appointmentModel.findOneAndDelete({technicianId:appointmentId});
+     res.status(201).json({
+      deleteAppointment:appointment
+     })
+  }
+  catch(error){
+    res.status(400).json({
+      message:error
+    })
+  }
+     
+
 }
